@@ -1,10 +1,10 @@
 #!/usr/bin/bash
 
-features="esp-c3-32s"
-flash_size="2mb"
-if [ "$1" == "4mb" ]; then
-  flash_size="4mb"
-  features="esp32-c3-supermini"
+flash_size="4mb"
+features="esp32-c3-supermini"
+if [ "$1" == "2mb" ]; then
+  features="esp-c3-32s"
+  flash_size="2mb"
 fi
 
 # cargo build --release

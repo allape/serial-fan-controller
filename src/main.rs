@@ -92,7 +92,7 @@ fn main() -> Result<()> {
         pwm: new_pwm(
             peripherals.ledc.timer1,
             peripherals.ledc.channel1,
-            peripherals.pins.gpio3,
+            peripherals.pins.gpio5,
             None,
             None,
             Some(RESOLUTION),
@@ -113,6 +113,7 @@ fn main() -> Result<()> {
     )?;
 
     #[cfg(feature = "esp32-c3-supermini")]
+    // let mut serial = UsbSerialJtag::new(peripherals.USB_DEVICE);
     let mut serial = hal::usb_serial::UsbSerialDriver::new(
         peripherals.usb_serial,
         peripherals.pins.gpio18,
@@ -130,7 +131,7 @@ fn main() -> Result<()> {
             Ok(n) => n,
             Err(e) => {
                 if e.code() == ESP_ERR_TIMEOUT {
-                    info!("Waiting...");
+                    info!("err Waiting...");
                     thread::sleep(READ_WAIT);
                 } else {
                     error!("Error reading from serial: {:?}", e);
@@ -142,7 +143,7 @@ fn main() -> Result<()> {
         if n == 0 {
             #[cfg(feature = "esp32-c3-supermini")]
             {
-                info!("Waiting...");
+                info!("0n Waiting...");
                 thread::sleep(READ_WAIT);
             }
             continue;
@@ -150,6 +151,7 @@ fn main() -> Result<()> {
 
         let input = std::str::from_utf8(&read_buf[..n]).unwrap_or("");
         if input.is_empty() {
+            info!("Emtpy...");
             continue;
         }
 
