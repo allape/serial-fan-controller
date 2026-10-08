@@ -35,7 +35,7 @@ where
     Channel: LedcChannel<SpeedMode = Timer::SpeedMode>,
 {
     let mut config = TimerConfig::default();
-    config.frequency = frequency.unwrap_or(Hertz(10_000));
+    config.frequency = frequency.unwrap_or(KiloHertz(20).into());
     config.resolution = resolution.unwrap_or(Resolution::Bits8);
 
     let timer_driver = LedcTimerDriver::new(timer, &config)?;
